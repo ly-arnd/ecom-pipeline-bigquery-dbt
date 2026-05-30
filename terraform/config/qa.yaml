@@ -1,0 +1,52 @@
+# ============================================
+# Terraform Configuration - YAML Format
+# ============================================
+# NOTE: project.id and project.region are populated from environment variables
+# via Terraform locals. See variables.tf for details.
+
+# Project Settings
+project:
+  id: "ecommerce-datahub-497410"  # Will be overridden by TF_VAR_project_id
+  region: "europe-west9"  # Will be overridden by TF_VAR_region
+
+# GCS Configuration
+gcs:
+  bucket:
+    name_prefix: "ecommerce-data-staging-bucket"
+#    location: "EU"
+    storage_class: "STANDARD"
+    force_destroy: true  # Set to false in production
+    public_access_prevention: "enforced"
+    versioning_enabled: false
+
+  # Data retention policy
+  data_retention_days: 2
+
+  # Dataset path relative to repository root
+  dataset_subpath: "dbt/seeds"
+
+  # MIME type mappings for uploaded files
+  content_types:
+    csv: "text/csv"
+    json: "application/json"
+    txt: "text/plain"
+    parquet: "application/octet-stream"
+
+# BigQuery Configuration
+bigquery:
+  datasets:
+    public:
+      description: "Public dataset for staging CSV files before loading into BigQuery tables."
+      location: "EU"
+      default_table_expiration_ms: 3600000
+    private:
+      description: "Private dataset for internal data."
+      location: "EU"
+      default_table_expiration_ms: 3600000
+
+# Tags for all resources
+tags:
+  managed_by: "terraform"
+  environment: "staging"
+  project: "ecommerce-pipeline"
+

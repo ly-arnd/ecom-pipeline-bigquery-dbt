@@ -1,27 +1,21 @@
 locals {
   repo_root = abspath("${path.module}/..")
-  dataset_path = "${local.repo_root}/${var.dataset_subpath}"
+  dataset_path = "${local.repo_root}/${local.config.gcs.dataset_subpath}"
   data_files = fileset(local.dataset_path, "**/*.csv")
-
-  content_types = {
-    csv  = "text/csv"
-    json = "application/json"
-    txt  = "text/plain"
-  }
 }
 
 resource "google_storage_bucket" "data_bucket" {
-  name     = var.gcs_bucket_name_prefix
-  project  = var.project_id
-  location = var.region
+  name     = local.config.gcs.bucket.name_prefix
+  project  = local.config.project.id
+  location = local.config.project.region
 
-  storage_class               = "STANDARD"
-  force_destroy               = var.force_destroy_bucket
+  storage_class               = local.config.gcs.bucket.storage_class
+  force_destroy               = local.config.gcs.bucket.force_destroy
   uniform_bucket_level_access = true
-  public_access_prevention    = "enforced"
+  public_access_prevention    = local.config.gcs.bucket.public_access_prevention
 
   versioning {
-    enabled = false
+    enabled = local.config.gcs.bucket.versioning_enabled
   }
 
   lifecycle_rule {
@@ -30,7 +24,7 @@ resource "google_storage_bucket" "data_bucket" {
     }
     condition {
       with_state = "ANY"
-      age        = var.data_retention_days
+      age        = local.config.gcs.data_retention_days
     }
   }
 }
@@ -52,7 +46,7 @@ resource "google_storage_bucket_object" "data_files" {
 
   # Specify content type based on file extension, defaulting to binary if unknown
   content_type = lookup(
-    local.content_types,
+    local.config.gcs.content_types,
     lower(try(reverse(split(".", each.key))[0], "")),
     "application/octet-stream",
   )
