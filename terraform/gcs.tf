@@ -1,7 +1,6 @@
 locals {
   repo_root = abspath("${path.module}/..")
   dataset_path = "${local.repo_root}/${var.dataset_subpath}"
-
   data_files = fileset(local.dataset_path, "**/*.csv")
 
   content_types = {
@@ -36,7 +35,6 @@ resource "google_storage_bucket" "data_bucket" {
   }
 }
 
-# Fail fast if the dataset directory is missing or empty.
 check "dataset_present" {
   assert {
     condition     = length(local.data_files) > 0

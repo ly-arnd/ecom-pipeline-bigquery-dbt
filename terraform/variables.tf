@@ -3,13 +3,11 @@
 variable "project_id" {
   description = "The Google Cloud project ID where resources will be created."
   type        = string
-  default     = "project-5ad67ba4-eac2-469b-97f"
 }
 
 variable "region" {
   description = "The GCP region for Cloud Build resources."
   type        = string
-  default     = "europe-west9"
 }
 
 ##### GCS VARIABLES ######
@@ -17,13 +15,13 @@ variable "region" {
 variable "gcs_bucket_name_prefix" {
   description = "Prefix for the GCS bucket name. Project ID will be appended for uniqueness."
   type        = string
-  default     = "ecommerce-data-staging"
+  default     = "ecommerce-data-staging-bucket"
 }
 
 variable "dataset_subpath" {
   description = "Path to the dataset directory, relative to the repository root."
   type        = string
-  default     = "datasets/olist_ecommerce_dataset"
+  default     = "dbt/seeds"
 }
 
 variable "force_destroy_bucket" {
