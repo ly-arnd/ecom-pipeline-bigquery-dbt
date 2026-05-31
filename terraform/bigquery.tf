@@ -21,15 +21,22 @@ resource "google_bigquery_dataset" "dataset" {
   dataset_id                  = each.key
   description                 = each.value.description
   location                    = each.value.location
-  default_table_expiration_ms = each.value.default_table_expiration_ms # 1 hour
+  default_table_expiration_ms = each.value.default_table_expiration_ms
 }
 
 # terraform/main.tf
 resource "google_bigquery_table" "landing_external_table" {
+  depends_on = [
+    google_bigquery_dataset.dataset["landing"],
+    google_storage_bucket_object.data_files
+  ]
+
   for_each = local.table_location_pairs
 
-  dataset_id = "landing"
+  dataset_id = google_bigquery_dataset.dataset["landing"].dataset_id
   table_id   = each.key
+
+  deletion_protection = terraform.workspace == "prod"
 
   external_data_configuration {
     source_uris = [each.value.location]

@@ -1,6 +1,7 @@
 # Load configuration from YAML file
 locals {
-  config_base = yamldecode(file("${path.module}/config/qa.yaml"))
+  environment = terraform.workspace
+  config_base = yamldecode(file("${path.module}/config/${terraform.workspace}.yaml"))
 
   # Override YAML values with environment variables if set
   config = merge(
