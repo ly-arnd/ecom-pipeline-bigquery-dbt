@@ -36,13 +36,26 @@ gcs:
 bigquery:
   datasets:
     public:
-      description: "Public dataset for staging CSV files before loading into BigQuery tables."
+      description: "Public dataset for open data and shared resources."
       location: "EU"
       default_table_expiration_ms: 3600000
     private:
-      description: "Private dataset for internal data."
+      description: "Private dataset for internal work."
       location: "EU"
       default_table_expiration_ms: 3600000
+    landing:
+      description: "Landing dataset for raw data ingestion from external sources (GCS, APIs, etc)."
+      location: "EU"
+      default_table_expiration_ms: 3600000
+      # TODO set access
+      # access = [
+      #   {
+      #     role          = "OWNER"
+      #     user_by_email = google_service_account.bqowner.email
+      #   }
+      # ]
+  dbt_seeds:
+    dbt_source_name: "ecommerce-data-landing_gcs"
 
 # Tags for all resources
 tags:
