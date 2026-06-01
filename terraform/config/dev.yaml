@@ -6,14 +6,12 @@
 
 # Project Settings
 project:
-  id: "ecommerce-datahub-497410"  # Will be overridden by TF_VAR_project_id
-  region: "europe-west9"  # Will be overridden by TF_VAR_region
+  id: ""  # Will be overridden by TF_VAR_project_id
+  region: ""  # Will be overridden by TF_VAR_region
 
 # GCS Configuration
 gcs:
   bucket:
-    name_prefix: "ecommerce-data-staging-bucket"
-#    location: "EU"
     storage_class: "STANDARD"
     force_destroy: true  # Set to false in production
     public_access_prevention: "enforced"

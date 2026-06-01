@@ -5,7 +5,7 @@ locals {
 }
 
 resource "google_storage_bucket" "data_bucket" {
-  name     = local.config.gcs.bucket.name_prefix
+  name     = var.bucket_name
   project  = local.config.project.id
   location = local.config.project.region
 
