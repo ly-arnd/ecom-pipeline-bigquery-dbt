@@ -9,7 +9,7 @@ locals {
   table_location_pairs = {
     for t in local.ecommerce_source.tables :
     t.name => {
-      location = t.external.location
+      location = replace(t.external.location, "{{ env_var('GCP_BUCKET_NAME') }}", var.bucket_name)
     }
   }
 }
