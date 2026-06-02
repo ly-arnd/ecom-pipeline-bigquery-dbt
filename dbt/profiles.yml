@@ -1,0 +1,12 @@
+#https://docs.getdbt.com/docs/local/profiles.yml?version=2.0
+
+ecommerce-datahub:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      threads: 16
+      database: "{{ env_var('GCP_PROJECT_ID') }}"
+      schema: private
+      method: oauth
+      dataproc_batch: null
