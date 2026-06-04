@@ -1,5 +1,5 @@
 locals {
-  dbt_source = yamldecode(file("${path.module}/../dbt/models/sources.yml"))
+  dbt_source = yamldecode(file("${path.module}/../astro-dbt-core/include/dbt/ecommerce_datahub/models/sources.yml"))
 
   ecommerce_source = one([
     for s in local.dbt_source.sources : s

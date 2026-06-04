@@ -21,8 +21,7 @@ gcs:
   data_retention_days: 2
 
   # Dataset path relative to repository root
-  dataset_subpath: "dbt/seeds"
-
+  dataset_subpath: "astro-dbt-core/include/dbt/ecommerce_datahub/seeds/"
   # MIME type mappings for uploaded files
   content_types:
     csv: "text/csv"
