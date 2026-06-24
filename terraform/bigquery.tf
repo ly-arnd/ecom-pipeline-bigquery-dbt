@@ -41,7 +41,7 @@ resource "google_bigquery_table" "landing_external_table" {
   deletion_protection = terraform.workspace == "prod"
 
   external_data_configuration {
-    source_uris = [each.value.location]
+    source_uris   = [each.value.location]
     source_format = "CSV"
 
     csv_options {

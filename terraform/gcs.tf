@@ -1,7 +1,7 @@
 locals {
-  repo_root = abspath("${path.module}/..")
+  repo_root    = abspath("${path.module}/..")
   dataset_path = "${local.repo_root}/${local.config.gcs.dataset_subpath}"
-  data_files = fileset(local.dataset_path, "**/*.csv")
+  data_files   = fileset(local.dataset_path, "**/*.csv")
 }
 
 resource "google_storage_bucket" "data_bucket" {

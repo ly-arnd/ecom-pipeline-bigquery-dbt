@@ -19,6 +19,6 @@ resource "google_service_account_key" "airflow_key" {
 
 output "airflow_service_account_key" {
   description = "The airflow service account email used by airflow."
-  value     = google_service_account_key.airflow_key.private_key
-  sensitive = true
+  value       = google_service_account_key.airflow_key.private_key
+  sensitive   = true
 }
