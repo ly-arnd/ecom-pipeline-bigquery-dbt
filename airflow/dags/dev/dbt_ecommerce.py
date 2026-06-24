@@ -11,7 +11,7 @@ DBT_PROFILE_NAME : Final[str] = "ecommerce_datahub"
 DBT_TARGET_ENV : Final[str] = "dev"
 
 profile_config = ProfileConfig(
-    profile_name="ecommerce_datahub",
+    profile_name=DBT_PROFILE_NAME,
     target_name=DBT_TARGET_ENV,
     profile_mapping=GoogleCloudServiceAccountFileProfileMapping(
         conn_id="google_cloud_default",

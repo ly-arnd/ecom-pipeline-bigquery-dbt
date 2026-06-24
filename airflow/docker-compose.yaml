@@ -79,8 +79,8 @@ x-airflow-common:
     # Airflow connections (auto-registered via AIRFLOW_CONN_ prefix), not visible in the UI, but available in the environment and via CLI.
     AIRFLOW_CONN_POSTGRES_DEFAULT: 'postgres://airflow:airflow@postgres:5432/airflow'
     AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: '{"conn_type": "google_cloud_platform", "extra": {"key_path": "/opt/airflow/keys/airflow-service-account-key.json", "scope": "https://www.googleapis.com/auth/cloud-platform", "num_retries": 5}}'
+
     DBT_TARGET: "airflow"
-    # GOOGLE_APPLICATION_CREDENTIALS: 'keys/airflow-service-account-key.json'
   volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
