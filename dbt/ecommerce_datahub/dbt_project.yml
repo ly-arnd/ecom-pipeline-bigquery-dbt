@@ -1,0 +1,140 @@
+#https://docs.getdbt.com/reference/dbt_project.yml
+# ==========================================================================
+# Production dbt Configuration
+# Project: ecommerce_datahub
+# Description: E-commerce data transformation pipeline for BigQuery
+# ==========================================================================
+
+name: ecommerce_datahub
+version: 1.0.0
+
+# Require dbt 1.9.0 or higher (but less than 2.0.0 for stability)
+require-dbt-version: [">=1.9.0", "<2.0.0"]
+
+# Profile name - must match profiles.yml entry
+profile: ecommerce_datahub
+
+# ==========================================================================
+# Path Configuration
+# ==========================================================================
+
+seed-paths: ["seeds"]
+model-paths: ["models"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+analysis-paths: ["analysis"]
+docs-paths: ["docs"]
+
+# Clean targets before running
+clean-targets:
+  - target
+  - dbt_packages
+
+seeds:
+  ecommerce_datahub:
+    +enabled: false
+
+# Global model configurations
+models:
+  ecommerce_datahub:
+    # Enable documentation persistence
+    +persist_docs:
+      relation: true
+      columns: true
+
+    # Default materialization strategy
+#    +materialized: view
+
+    # Default schema policy
+#    +schema_name: "{{ target.schema }}"
+
+    # Tags for filtering
+#    +tags: []
+
+    # BigQuery optimizations
+#    +on_schema_change: ignore
+#    +pre-hook: "{{ log('Starting transformation...', info=true) }}"
+#    +post-hook: "{{ log('Transformation complete!', info=true) }}"
+
+    # =======================================================================
+    # Landing Layer (Raw Data)
+    # =======================================================================
+    landing:
+      +schema: "landing"
+      +description: "Landing zone for raw data ingestion"
+      +tags:
+        - "landing"
+        - "raw"
+
+      # External tables from GCS
+      +materialized: external
+      +location: "gs://{{ env_var('GCS_BUCKET_NAME', 'ecommerce-data-bucket') }}/data/"
+
+    # =======================================================================
+    # Private Layer (Transformation)
+    # =======================================================================
+    private:
+      +schema: "private"
+      +description: "Private transformation layer"
+      +materialized: table
+      +tags:
+        - "private"
+        - "transformation"
+
+#      # Time to live for snapshots
+#      +snapshot_table_expiration_days: 30
+
+    # =======================================================================
+    # Public Layer (Consumption)
+    # =======================================================================
+    public:
+      +schema: "public"
+      +description: "Public data mart for consumption"
+      +materialized: table
+      +tags:
+        - "public"
+        - "consumption"
+
+#      # High availability configuration
+#      +hours_to_expiration: null  # Keep indefinitely
+
+# ==========================================================================
+# Seeds Configuration (CSV to Table)
+# ==========================================================================
+#seeds:
+#  ecommerce_datahub:
+#    # Disabled - Terraform will manage seeds as external tables
+#    +enabled: false
+#    +schema: landing
+#    +tags:
+#      - "seed"
+#
+## ==========================================================================
+## Tests Configuration
+## ==========================================================================
+#tests:
+#  ecommerce_datahub:
+#    +tags:
+#      - "test"
+#    # Store test results in a separate schema
+#    +store_failures: true
+#    +schema: test_results
+#
+## ==========================================================================
+## Snapshots Configuration
+## ==========================================================================
+#snapshots:
+#  ecommerce_datahub:
+#    +tags:
+#      - "snapshot"
+#    +schema: snapshots
+#    +unique_id: id
+#    +updated_at: updated_at
+#
+## ==========================================================================
+## Analysis Configuration
+## ==========================================================================
+#analysis:
+#  ecommerce_datahub:
+#    +tags:
+#      - "analysis"

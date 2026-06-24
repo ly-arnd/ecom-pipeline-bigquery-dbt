@@ -1,0 +1,18 @@
+#https://docs.getdbt.com/docs/local/profiles.yml?version=2.0
+ecommerce_datahub:
+  target: "{{ env_var('DBT_TARGET', 'local') }}"
+  outputs:
+    local:
+      type: bigquery
+      database: "{{ env_var('GCP_PROJECT_ID') }}"
+      schema: private
+      method: oauth
+      location: EU
+
+    airflow:
+      type: bigquery
+      database: "{{ env_var('GCP_PROJECT_ID') }}"
+      dataset: private
+      method: oauth
+      location: "{{ env_var('GCP_BQ_LOCATION', 'EU') }}"
+      impersonate_service_account: "{{ env_var('DBT_IMPERSONATE_SERVICE_ACCOUNT') }}"

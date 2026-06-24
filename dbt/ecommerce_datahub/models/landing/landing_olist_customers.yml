@@ -1,0 +1,8 @@
+version: 2
+
+models:
+  - name: landing_olist_customers
+    columns:
+      - name: customer_unique_id
+        data_tests:
+          - not_null
