@@ -21,7 +21,7 @@ gcs:
   data_retention_days: 2
 
   # Dataset path relative to repository root
-  dataset_subpath: "astro-dbt-core/include/dbt/ecommerce_datahub/seeds/"
+  dataset_subpath: "dbt/ecommerce_datahub/seeds/"
   # MIME type mappings for uploaded files
   content_types:
     csv: "text/csv"
@@ -44,19 +44,23 @@ bigquery:
       description: "Landing dataset for raw data ingestion from external sources (GCS, APIs, etc)."
       location: "EU"
       default_table_expiration_ms: 3600000
-      # TODO set access
-      # access = [
-      #   {
-      #     role          = "OWNER"
-      #     user_by_email = google_service_account.bqowner.email
-      #   }
-      # ]
+
   dbt_seeds:
     dbt_source_name: "ecommerce-data-landing_gcs"
+
+iam_service_account:
+  airflow:
+    service_account_id: "airflow-runner-service-account"
+    service_account_display_name: "Airflow Runner Service Account"
+    required_roles:
+      - "roles/bigquery.dataEditor"
+      - "roles/bigquery.jobUser"
+      - "roles/bigquery.user"
+      - "roles/storage.objectViewer"
 
 # Tags for all resources
 tags:
   managed_by: "terraform"
-  environment: "staging"
-  project: "ecommerce-pipeline"
+  environment: "dev"
+  project: "ecommerce-datahub"
 

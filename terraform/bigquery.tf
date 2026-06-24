@@ -1,5 +1,5 @@
 locals {
-  dbt_source = yamldecode(file("${path.module}/../astro-dbt-core/include/dbt/ecommerce_datahub/models/sources.yml"))
+  dbt_source = yamldecode(file("${path.module}/../dbt/ecommerce_datahub/models/sources.yml"))
 
   ecommerce_source = one([
     for s in local.dbt_source.sources : s
@@ -22,6 +22,8 @@ resource "google_bigquery_dataset" "dataset" {
   description                 = each.value.description
   location                    = each.value.location
   default_table_expiration_ms = each.value.default_table_expiration_ms
+
+  delete_contents_on_destroy = terraform.workspace != "prod"
 }
 
 # terraform/main.tf
