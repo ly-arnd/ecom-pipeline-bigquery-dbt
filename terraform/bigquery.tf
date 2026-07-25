@@ -45,9 +45,11 @@ resource "google_bigquery_table" "landing_external_table" {
     source_format = "CSV"
 
     csv_options {
-      skip_leading_rows = 1
-      field_delimiter   = ","
-      quote             = "\""
+      skip_leading_rows     = 1
+      field_delimiter       = ","
+      quote                 = "\""
+      allow_quoted_newlines = true
+      allow_jagged_rows     = false
     }
 
     autodetect = true
