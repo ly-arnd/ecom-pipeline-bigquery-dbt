@@ -1,0 +1,33 @@
+version: 2
+
+models:
+    - name: olist_geolocation
+      description: "This dataset has information Brazilian zip codes and its lat/lng coordinates. Use it to plot maps and find distances between sellers and customers."
+      columns:
+        - name: geolocation_zip_code_prefix
+          data_type: STRING
+          description: "Zip code prefix (first 5 digits)"
+          tests:
+            - not_null
+        - name: geolocation_lat
+          data_type: FLOAT64
+          description: "Latitude coordinate"
+          tests:
+            - not_null
+        - name: geolocation_lng
+          data_type: FLOAT64
+          description: "Longitude coordinate"
+          tests:
+            - not_null
+        - name: geolocation_city
+          data_type: STRING
+          description: "City name"
+          tests:
+            - not_null
+        - name: geolocation_state
+          data_type: STRING
+          description: "State (UF - Unidade Federativa)"
+          tests:
+            - accepted_values:
+                arguments:
+                  values: ["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"]

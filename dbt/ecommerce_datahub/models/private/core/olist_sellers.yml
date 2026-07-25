@@ -1,0 +1,29 @@
+version: 2
+
+models:
+    - name: olist_sellers
+      description: "Contains Olist sellers data"
+      columns:
+        - name: seller_id
+          data_type: STRING
+          description: "Seller unique identifier"
+          tests:
+            - not_null
+            - unique
+        - name: seller_zip_code_prefix
+          data_type: STRING
+          description: "Seller zip code prefix (first 5 digits)"
+          tests:
+            - not_null
+        - name: seller_city
+          data_type: STRING
+          description: "Seller city name"
+          tests:
+            - not_null
+        - name: seller_state
+          data_type: STRING
+          description: "Seller state name"
+          tests:
+            - accepted_values:
+                arguments:
+                  values: [ "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" ]

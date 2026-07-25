@@ -1,0 +1,43 @@
+version: 2
+
+models:
+    - name: olist_order_payments
+      description: "Contains Olist  data about the orders payment options. Use it to analyze payment methods and installment patterns."
+      columns:
+        - name: order_id
+          data_type: STRING
+          description: "Unique identifier of each order."
+          tests:
+            - not_null
+        - name: payment_sequential
+          data_type: INT64
+          description: "If an order is paid using multiple payment methods, the database creates one record per payment and assigns each one a sequence number to indicate its order within that transaction."
+          tests:
+            - not_null
+            - dbt_utils.expression_is_true:
+                arguments:
+                  expression: "> 0"
+        - name: payment_type
+          data_type: STRING
+          description: "Payment method used for the order."
+          tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ["credit_card", "boleto", "voucher", "debit_card", "not_defined"]
+        - name: payment_installments
+          data_type: INT64
+          description: "Number of installments for the payment."
+          tests:
+              - not_null
+              - dbt_utils.expression_is_true:
+                  arguments:
+                  expression: ">= 0"
+        - name: payment_value
+          data_type: FLOAT64
+          description: "Total value of the payment."
+          tests:
+              - not_null
+              - dbt_utils.expression_is_true:
+                  arguments:
+                  expression: ">= 0"

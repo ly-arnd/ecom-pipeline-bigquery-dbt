@@ -1,0 +1,16 @@
+version: 2
+
+models:
+    - name: product_category_name_translation
+      description: "Translates the product_category_name to English."
+      columns:
+        - name: product_category_name
+          data_type: STRING
+          description: "Product category name in Portuguese"
+          tests:
+            - not_null
+        - name: product_category_name_english
+          data_type: STRING
+          description: "Product category name in English"
+          tests:
+            - not_null

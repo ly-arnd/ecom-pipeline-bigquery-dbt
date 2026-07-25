@@ -1,0 +1,36 @@
+version: 2
+
+models:
+    - name: olist_order_reviews
+      description: "After a customer purchases the product from Olist Store a seller gets notified to fulfill that order. Once the customer receives the product, or the estimated delivery date is due, the customer gets a satisfaction survey by email where he can give a note for the purchase experience and write down some comments."
+      columns:
+        - name: review_id
+          data_type: STRING
+          description: "Unique identifier for each review."
+          tests:
+            - not_null
+            #- unique # not unique, i think this is because a customer can review the same order but for different products multiple times, but I am not sure. To confirm.
+        - name: order_id
+          data_type: STRING
+          description: "Unique identifier for each order."
+          tests:
+            - not_null
+        - name: review_score
+          data_type: INTEGER
+          description: "Customer review score (1 to 5)."
+          tests:
+            - accepted_values:
+                arguments:
+                  values: [1, 2, 3, 4, 5]
+        - name: review_comment_title
+          data_type: STRING
+          description: "Title of the customer review comment."
+        - name: review_comment_message
+          data_type: STRING
+          description: "Message of the customer review comment."
+        - name: review_creation_date
+          data_type: TIMESTAMP
+          description: "Timestamp when the review was created."
+        - name: review_answer_timestamp
+          data_type: TIMESTAMP
+          description: "Timestamp when the review was answered."

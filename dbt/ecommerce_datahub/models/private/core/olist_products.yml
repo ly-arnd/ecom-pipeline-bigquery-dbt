@@ -1,0 +1,64 @@
+version: 2
+
+models:
+    - name: olist_products
+      description: "Contains Olist sold product data"
+      columns:
+        - name: product_id
+          data_type: STRING
+          description: "Unique identifier of each product"
+          tests:
+            - not_null
+            - unique
+        - name: product_category_name
+          data_type: STRING
+          description: "Product category name in Portuguese"
+        - name: product_name_length
+          data_type: INT64
+          description: "Length of the product name"
+          tests:
+            - dbt_utils.expression_is_true:
+                arguments:
+                  expression: ">= 0"
+        - name: product_description_length
+          data_type: INT64
+          description: "Length of the product description"
+          tests:
+            - dbt_utils.expression_is_true:
+                arguments:
+                  expression: ">= 0"
+        - name: product_photos_qty
+          data_type: INT64
+          description: "Quantity of product photos"
+          tests:
+            - dbt_utils.expression_is_true:
+                arguments:
+                  expression: ">= 0"
+        - name: product_weight_g
+          data_type: INT64
+          description: "Weight of the product in grams"
+          tests:
+            - dbt_utils.expression_is_true:
+                arguments:
+                  expression: ">= 0"
+        - name: product_length_cm
+          data_type: INT64
+          description: "Length of the product in centimeters"
+          tests:
+            - dbt_utils.expression_is_true:
+                arguments:
+                  expression: "> 0"
+        - name: product_height_cm
+          data_type: INT64
+          description: "Height of the product in centimeters"
+          tests:
+            - dbt_utils.expression_is_true:
+                arguments:
+                  expression: "> 0"
+        - name: product_width_cm
+          data_type: INT64
+          description: "Width of the product in centimeters"
+          tests:
+            - dbt_utils.expression_is_true:
+                arguments:
+                  expression: "> 0"

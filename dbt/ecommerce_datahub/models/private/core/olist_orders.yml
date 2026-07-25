@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: olist_orders
+    description: "Contains Olist orders data"
+    columns:
+      - name: order_id
+        data_type: STRING
+        description: "Unique identifier of each order"
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        data_type: STRING
+        description: "Identifier of the customer who placed the order"
+        tests:
+          - not_null
+      - name: order_status
+        data_type: STRING
+        description: "Status of the order"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ["approved", "canceled", "created", "delivered", "invoiced", "processing", "shipped", "unavailable"]
+      - name: order_purchase_timestamp
+        data_type: TIMESTAMP
+        description: "Timestamp when the order was placed"
+        tests:
+          - not_null
+      - name: order_approved_at
+        data_type: TIMESTAMP
+        description: "Timestamp when the order was approved"
+      - name: order_delivered_carrier_date
+        data_type: TIMESTAMP
+        description: "Timestamp when the order was handed over to the carrier"
+      - name: order_delivered_customer_date
+        data_type: TIMESTAMP
+        description: "Timestamp when the order was delivered to the customer"
+      - name: order_estimated_delivery_date
+        data_type: TIMESTAMP
+        description: "Estimated delivery date of the order"

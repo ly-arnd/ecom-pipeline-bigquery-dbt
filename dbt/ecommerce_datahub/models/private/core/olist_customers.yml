@@ -1,0 +1,38 @@
+version: 2
+
+models:
+    - name: olist_customers
+      description: "Contains Olist customer data"
+      columns:
+        - name: customer_id
+          data_type: STRING
+          description: "Key to the orders dataset. Each order has a unique customer_id"
+          tests:
+            - not_null
+        - name: customer_unique_id
+          data_type: STRING
+          description: "Unique customer identifier"
+          tests:
+            - not_null
+        - name: customer_zip_code_prefix
+          data_type: STRING
+          description: "Customer zip code prefix (first 5 digits)"
+          tests:
+            - not_null
+        - name: customer_city
+          data_type: STRING
+          description: "Customer city name"
+          tests:
+            - not_null
+        - name: customer_state
+          data_type: STRING
+          description: "Customer state (UF - Unidade Federativa)"
+          tests:
+            - accepted_values:
+                arguments:
+                  values: ["AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"]
+        - name: source_file_name
+          data_type: STRING
+          description: "Name of the source file from which the data was loaded"
+          tests:
+            - not_null

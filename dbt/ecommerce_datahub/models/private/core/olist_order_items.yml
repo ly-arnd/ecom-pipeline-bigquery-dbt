@@ -1,0 +1,59 @@
+version: 2
+
+models:
+    - name: olist_order_items
+      description: "Includes data about the items purchased within each order.
+Example:
+
+The order_id = 00143d0f86d6fbd9f9b38ab440ac16f5 has 3 items (same product). Each item has the freight calculated accordingly to its measures and weight. To get the total freight value for each order you just have to sum.
+
+The total order_item value is: 21.33 * 3 = 63.99
+
+The total freight value is: 15.10 * 3 = 45.30
+
+The total order value (product + freight) is: 45.30 + 63.99 = 109.29"
+      columns:
+        - name: order_id
+          data_type: STRING
+          description: "Unique identifier of each order."
+          tests:
+              - not_null
+        - name: order_item_id
+          data_type: INT64
+          description: "Unique identifier of each item within an order."
+          tests:
+              - not_null
+              - dbt_utils.expression_is_true:
+                  arguments:
+                    expression: "> 0"
+        - name: product_id
+          data_type: STRING
+          description: "Unique identifier of each product."
+          tests:
+              - not_null
+        - name: seller_id
+          data_type: STRING
+          description: "Unique identifier of each seller."
+          tests:
+              - not_null
+        - name: shipping_limit_date
+          data_type: TIMESTAMP
+          description: "Seller shipping limit date for handling the order over to the logistic partner."
+          tests:
+              - not_null
+        - name: price
+          data_type: FLOAT64
+          description: "Price of the order item."
+          tests:
+              - not_null
+              - dbt_utils.expression_is_true:
+                  arguments:
+                    expression: ">= 0"
+        - name: freight_value
+          data_type: FLOAT64
+          description: "Freight cost allocated to the item. If an order contains multiple items, the total freight cost is distributed across the items."
+          tests:
+            - not_null
+            - dbt_utils.expression_is_true:
+                arguments:
+                  expression: ">= 0"

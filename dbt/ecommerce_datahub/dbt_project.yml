@@ -57,20 +57,6 @@ models:
 #    +post-hook: "{{ log('Transformation complete!', info=true) }}"
 
     # =======================================================================
-    # Landing Layer (Raw Data)
-    # =======================================================================
-    landing:
-      +schema: "landing"
-      +description: "Landing zone for raw data ingestion"
-      +tags:
-        - "landing"
-        - "raw"
-
-      # External tables from GCS
-      +materialized: external
-      +location: "gs://{{ env_var('GCS_BUCKET_NAME', 'ecommerce-data-bucket') }}/data/"
-
-    # =======================================================================
     # Private Layer (Transformation)
     # =======================================================================
     private:

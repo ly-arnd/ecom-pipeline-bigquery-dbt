@@ -14,19 +14,67 @@ sources:
             format: csv
             field_delimiter: ","
             skip_leading_rows: 1
-        columns:
-          - name: customer_id
-            data_type: STRING
-            description: "Unique customer identifier"
-          - name: customer_unique_id
-            data_type: STRING
-            description: "Anonymous customer unique identifier"
-          - name: customer_zip_code_prefix
-            data_type: STRING
-            description: "Customer zip code prefix (first 5 digits)"
-          - name: customer_city
-            data_type: STRING
-            description: "Customer city"
-          - name: customer_state
-            data_type: STRING
-            description: "Customer state (UF - Unidade Federativa)"
+      - name: olist_geolocation
+        description: "External table containing OLIST geolocation data from GCS CSV file"
+        external:
+          location: "gs://{{ env_var('GCP_BUCKET_NAME') }}/olist_geolocation_dataset*.csv"
+          options:
+            format: csv
+            field_delimiter: ","
+            skip_leading_rows: 1
+      - name: olist_order_items
+        description: "External table containing OLIST order items data from GCS CSV file"
+        external:
+          location: "gs://{{ env_var('GCP_BUCKET_NAME') }}/olist_order_items_dataset*.csv"
+          options:
+            format: csv
+            field_delimiter: ","
+            skip_leading_rows: 1
+      - name: olist_order_payments
+        description: "External table containing OLIST order payments data from GCS CSV file"
+        external:
+          location: "gs://{{ env_var('GCP_BUCKET_NAME') }}/olist_order_payments_dataset*.csv"
+          options:
+            format: csv
+            field_delimiter: ","
+            skip_leading_rows: 1
+      - name: olist_order_reviews
+        description: "External table containing OLIST order reviews data from GCS CSV file"
+        external:
+          location: "gs://{{ env_var('GCP_BUCKET_NAME') }}/olist_order_reviews_dataset*.csv"
+          options:
+            format: csv
+            field_delimiter: ","
+            skip_leading_rows: 1
+      - name: olist_orders
+        description: "External table containing OLIST orders data from GCS CSV file"
+        external:
+          location: "gs://{{ env_var('GCP_BUCKET_NAME') }}/olist_orders_dataset*.csv"
+          options:
+            format: csv
+            field_delimiter: ","
+            skip_leading_rows: 1
+      - name: olist_products
+        description: "External table containing OLIST products data from GCS CSV file"
+        external:
+          location: "gs://{{ env_var('GCP_BUCKET_NAME') }}/olist_products_dataset*.csv"
+          options:
+            format: csv
+            field_delimiter: ","
+            skip_leading_rows: 1
+      - name: olist_sellers
+        description: "External table containing OLIST sellers data from GCS CSV file"
+        external:
+          location: "gs://{{ env_var('GCP_BUCKET_NAME') }}/olist_sellers_dataset*.csv"
+          options:
+            format: csv
+            field_delimiter: ","
+            skip_leading_rows: 1
+      - name: product_category_name_translation
+        description: "External table containing OLIST product category name translations from GCS CSV file"
+        external:
+          location: "gs://{{ env_var('GCP_BUCKET_NAME') }}/product_category_name_translation*.csv"
+          options:
+            format: csv
+            field_delimiter: ","
+            skip_leading_rows: 1
