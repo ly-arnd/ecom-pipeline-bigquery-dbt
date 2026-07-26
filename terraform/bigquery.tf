@@ -40,9 +40,13 @@ resource "google_bigquery_table" "landing_external_table" {
 
   deletion_protection = terraform.workspace == "prod"
 
+  schema = fileexists("${path.module}/external-table-schemas/${terraform.workspace}/external-table-schemas/${each.key}.json") ? file("${path.module}/external-table-schemas/${terraform.workspace}/external-table-schemas/${each.key}.json") : null
+
   external_data_configuration {
     source_uris   = [each.value.location]
     source_format = "CSV"
+
+    ignore_unknown_values = true
 
     csv_options {
       skip_leading_rows     = 1
@@ -52,6 +56,6 @@ resource "google_bigquery_table" "landing_external_table" {
       allow_jagged_rows     = false
     }
 
-    autodetect = true
+    autodetect =  fileexists("${path.module}/external-table-schemas/${terraform.workspace}/${each.key}.json") ? false : true
   }
 }
