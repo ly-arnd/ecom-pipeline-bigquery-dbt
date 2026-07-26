@@ -56,6 +56,6 @@ resource "google_bigquery_table" "landing_external_table" {
       allow_jagged_rows     = false
     }
 
-    autodetect =  fileexists("${path.module}/external-table-schemas/${terraform.workspace}/${each.key}.json") ? false : true
+    autodetect = fileexists("${path.module}/external-table-schemas/${terraform.workspace}/${each.key}.json") ? false : true
   }
 }
