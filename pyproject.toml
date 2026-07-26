@@ -1,0 +1,16 @@
+[project]
+name = "ecom-pipeline-bigquery-dbt"
+version = "0.1.0"
+description = "Complete end-to-end data pipeline for an e-commerce analytics platform. The project ingests raw e-commerce data, transforms and models it using modern data engineering best practices, and loads curated datasets into a data warehouse. It includes automated data quality checks, scalable ELT workflows, and interactive dashboards that provide actionable insights into sales performance, customer behavior, product trends, and operational metrics."
+readme = "README.md"
+requires-python = ">=3.10.13"
+dependencies = [
+    "kagglehub>=1.0.2",
+    "pandas>=2.3.3",
+    "pyarrow>=25.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "jupyter>=1.1.1",
+]
