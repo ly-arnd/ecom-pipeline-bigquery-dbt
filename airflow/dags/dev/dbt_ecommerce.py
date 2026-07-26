@@ -42,5 +42,10 @@ dbt_run = DbtDag(
     profile_config=profile_config,
     execution_config=execution_config,
 
+    operator_args={
+        "append_env": True,
+        "dbt_cmd_flags": ["--no-partial-parse"],
+    },
+
     tags=["dbt", "bigquery", DBT_PROFILE_NAME, DBT_TARGET_ENV],
 )
