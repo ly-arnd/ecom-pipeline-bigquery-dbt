@@ -35,15 +35,15 @@ bigquery:
     public:
       description: "Public dataset for open data and shared resources."
       location: "EU"
-      default_table_expiration_ms: 3600000
+      default_table_expiration_ms: 86400000
     private:
       description: "Private dataset for internal work."
       location: "EU"
-      default_table_expiration_ms: 3600000
+      default_table_expiration_ms: 86400000
     landing:
       description: "Landing dataset for raw data ingestion from external sources (GCS, APIs, etc)."
       location: "EU"
-      default_table_expiration_ms: 3600000
+      default_table_expiration_ms: 86400000
 
   dbt_seeds:
     dbt_source_name: "ecommerce-data-landing_gcs"
