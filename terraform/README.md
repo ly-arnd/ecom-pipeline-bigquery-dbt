@@ -10,7 +10,7 @@ This folder manages the following resources:
 - Service Accounts
 - IAM roles and permissions
 - BigQuery External Tables
-- Upload of dbt-generated files to GCS
+- Upload of dbt sourced files to GCS
 
 The infrastructure is fully environment-driven through YAML configuration files and supports multiple environments using Terraform workspaces.
 
@@ -24,8 +24,8 @@ The deployment process is as follows:
 2. GCS buckets are created or updated.
 3. Service Accounts are provisioned.
 4. IAM permissions are assigned.
-5. dbt-generated files are uploaded to GCS.
-6. BigQuery External Tables are created and configured to read data directly from GCS.
+5. dbt sourced files are uploaded to GCS.
+6. BigQuery External Tables are created and configured to read data directly from GCS. Schema is inferred from if no schema is provided in the [configuration folder](external-table-schemas).
 
 ---
 
@@ -52,26 +52,6 @@ gcloud config list
 ---
 
 ## Deployment
-
-```bash
-# Initialize terraform
-terraform init
-
-# Create dev workspace
-terraform workspace new dev
-
-# Select dev workspace
-terraform workspace select dev
-
-# Validate Configuration
-terraform validate
-
-# Review changes before applying
-terraform plan
-
-# Apply changes to the environment
-terraform apply
-```
 
 For automated deployments:
 ```bash
@@ -170,3 +150,29 @@ Example:
 | qa | `config/qa.yaml` |
 | prod | `config/prod.yaml` |
 
+---
+
+## Cheatsheet for Terraform commands
+
+```bash
+# Initialize terraform
+terraform init
+
+# Create dev workspace
+terraform workspace new dev
+
+# Select dev workspace
+terraform workspace select dev
+
+# Validate Configuration
+terraform validate
+
+# Format Configuration
+terraform fmt -recursive
+
+# Review changes before applying
+terraform plan
+
+# Apply changes to the environment
+terraform apply
+```
